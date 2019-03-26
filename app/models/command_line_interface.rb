@@ -1,9 +1,9 @@
 def welcome
- puts "Welcome to StarQuery!"
+ puts "Welcome to Git-Me-a-Job"
 end
 
-def get_character_from_user
-  puts "please enter a character name"
+def get_input_from_user
+  puts "please enter a username"
   input = gets.chomp.downcase
   # use gets to capture the user's input. This method should return that input, downcased.
 end
