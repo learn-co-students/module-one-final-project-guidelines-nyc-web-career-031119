@@ -2,7 +2,7 @@ require 'rest-client'
 require 'json'
 require 'pry'
 
-class Pokemon
+class SOMETHING
   random_pokemon_num = rand(1..151)
   pokemon_string1 = RestClient.get("https://pokeapi.co/api/v2/pokemon/#{random_pokemon_num}/")
   pokemon_hash1 = JSON.parse(pokemon_string1)
@@ -14,6 +14,7 @@ class Pokemon
   secondary_type = if pokemon_hash1["types"].length > 1
     pokemon_hash1["types"].find  {|each| each["slot"] == 2}["type"]["name"]
   end
+
   stat_hp = pokemon_hash1["stats"].find {|each| each["stat"]["name"] == "hp"}["base_stat"]
   stat_speed = pokemon_hash1["stats"].find {|each| each["stat"]["name"] == "speed"}["base_stat"]
   stat_attack = pokemon_hash1["stats"].find {|each| each["stat"]["name"] == "attack"}["base_stat"]
@@ -25,5 +26,5 @@ class Pokemon
 
   genus = pokemon_hash2["genera"].find {|each| each["language"]['name'] == "en"}["genus"]
   flavor_text = pokemon_hash2["flavor_text_entries"].select {|each| each["language"]['name'] == "en"}.sample["flavor_text"]
-  binding.pry
+  # binding.pry
 end
