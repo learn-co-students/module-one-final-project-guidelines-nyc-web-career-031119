@@ -30,9 +30,9 @@ require 'pry'
     "Entertainment: Cartoon & Animations"=>32
   }
 
-  def get_question(category=nil, difficulty=nil)
+  def get_question(category_name=nil, difficulty=nil)
     category_number = category_number(category_name)
-    JSON.parse(RestClient.get("https://opentdb.com/api.php?amount=1&category=#{category_number}&difficulty=#{difficulty}"))['results']
+    JSON.parse(RestClient.get("https://opentdb.com/api.php?amount=1&category=#{category_number}&difficulty=#{difficulty}"))['results'].first
   end
 
   def get_random_question_from_api
@@ -48,13 +48,13 @@ require 'pry'
     JSON.parse(RestClient.get("https://opentdb.com/api.php?amount=1&category=#{category_number}"))['results']
   end
 
-  def get_question
+#  def get_question
     # category and difficulty are optional - get_question can take 0-2 args if defined
     # I think we should keep amount set to = 1 so it pulls random each time? - not sure about get_question(amount,category)
     # after question is pulled we can find_or_create_by in the question table
     # after quetion is pulled we can find_or_create_by in player table to determine whether or not they previously answered, if so, pull new quesiton with same args
     # call category_number method to add '&category=X' to API URL?
     # define and call question_difficulty method and dd to API URL?
-  end
+#  end
 
 # end

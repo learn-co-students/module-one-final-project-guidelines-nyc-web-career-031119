@@ -34,20 +34,62 @@ end
 
 def start_game
   # puts "Choose a category"
-  question = get_random_question_from_api
+  category, difficulty = get_category_difficulty
+  # question = get_random_question_from_api
+  # question = get_question(category, difficulty)
   # binding.pry
-  puts question["question"]
-  puts question["correct_answer"]
-  question["incorrect_answers"].each do |answer|
-    puts answer
-  end
-  answer = $stdin.gets.chomp.downcase
-  if answer == "exit"
-    exit
-  end
-  correct?(question, answer)
+  questions = generate_questions(category, difficulty)
+  asker(questions)
 
 end
+
+def get_category_difficulty
+  Question.display_categories
+  puts "Choose a catergory (leave blank for all)"
+  category = $stdin.gets.chomp
+  Question.display_difficulty
+  puts "Choose a difficulty (leave blank for all)"
+  difficulty = $stdin.gets.chomp.downcase
+  return category, difficulty
+end
+
+def generate_questions(category, difficulty)
+  # category, difficulty = get_category_difficulty
+
+  questions_array = []
+  until questions_array.length == 10
+    question = get_question(category, difficulty)
+    if !validate_question(question)
+      questions_array << question
+    end
+  end
+
+  questions_array
+end
+
+#validate_question methods returns a true / false value
+def validate_question(question)# current_player)
+  q = Question.find_or_create_by(question: question["question"])
+  !!QuestionMaster.find_by(question_id: q.id, player_id: @current_player.id)
+end
+
+def asker(q_array)
+  q_array.each do |q|
+    puts q["question"]
+    puts q["correct_answer"]
+    q["incorrect_answers"].each do |answer|
+      puts answer
+    end
+    answer = $stdin.gets.chomp.downcase
+    if answer == "exit"
+      exit
+    end
+    correct?(q, answer)
+  end
+end
+
+
+
 
 welcome
 # new_user?
