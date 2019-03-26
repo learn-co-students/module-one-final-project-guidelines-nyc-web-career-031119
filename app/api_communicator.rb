@@ -16,10 +16,14 @@ end
 
 def print_average_rating(show_name)
    attributes_hash = get_show_from_api(show_name)
-   puts attributes_hash['averageRating']
+    attributes_hash['averageRating']
 end
 
-def pring_status(show_name)
+def print_status(show_name)
   attributes_hash = get_show_from_api(show_name)
-  puts attributes_hash['status']
+   attributes_hash['status']
+end
+
+def nice_print_format(show_name)
+  puts "average rating: #{print_average_rating(show_name)}, status: #{print_status(show_name)}"
 end
