@@ -5,7 +5,7 @@ end
 def sign_in
   puts "Please, type in a username."
   user_input = gets.chomp.downcase
-  User.find_or_create_by(name: user_input)
+  User.find_or_create(user_name: user_input)
 end
 
 def get_show_from_user
