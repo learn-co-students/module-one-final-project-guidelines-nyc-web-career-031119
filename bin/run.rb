@@ -1,5 +1,5 @@
 require_relative '../config/environment'
-
+require 'json'
 # puts "HELLO WORLD"
 
 
@@ -12,6 +12,8 @@ def login(username)
     puts "Welcome #{player.username}!"
   end
   @current_player = player
+  @score = 0
+  @life = 3
 end
 
 def main_menu
@@ -27,9 +29,19 @@ def correct?(question, answer)
   if question["correct_answer"].downcase == answer
     puts "Correct!"
     #increase score!!
+    @score += 1
   else
     puts "Wrong!" #play sound, minus life
+    @life -= 1
   end
+end
+
+def game_over?
+  if @life == 0
+    puts "You have been defeated!!"
+    false
+  end
+
 end
 
 def start_game
@@ -57,10 +69,13 @@ def generate_questions(category, difficulty)
   # category, difficulty = get_category_difficulty
 
   questions_array = []
-  until questions_array.length == 10
+  until questions_array.length == 4
     question = get_question(category, difficulty)
-    if !validate_question(question)
-      questions_array << question
+    question["style"] = question.delete("type")
+    # binding.pry
+    q = Question.find_or_create_by(question)
+    if !validate_question(q)
+      questions_array << q
     end
   end
 
@@ -69,26 +84,30 @@ end
 
 #validate_question methods returns a true / false value
 def validate_question(question)# current_player)
-  q = Question.find_or_create_by(question: question["question"])
-  !!QuestionMaster.find_by(question_id: q.id, player_id: @current_player.id)
+  !!QuestionMaster.find_by(question_id: question.id, player_id: @current_player.id)
 end
 
 def asker(q_array)
+  # binding.pry
   q_array.each do |q|
     puts q["question"]
     puts q["correct_answer"]
-    q["incorrect_answers"].each do |answer|
+    JSON.parse(q["incorrect_answers"]).each do |answer|
       puts answer
     end
+    QuestionMaster.create(question_id: q.id, player_id: @current_player.id)
     answer = $stdin.gets.chomp.downcase
     if answer == "exit"
       exit
     end
     correct?(q, answer)
+    break if game_over?
   end
 end
 
+def asked?(q)
 
+end
 
 
 welcome
@@ -112,10 +131,13 @@ while playing
     puts "Bye!"
     playing = false
     # exit
+  else
+    puts "Please enter a valid number"
   end
 end
 
-
+##BATMAN NEEDS YOUR HELP AGAINST RIDDLER
+##TITLE: ORACLE
 
 # welcome, please enter your username
   # if exists

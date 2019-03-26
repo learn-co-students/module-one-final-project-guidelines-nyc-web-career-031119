@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190325204459) do
+ActiveRecord::Schema.define(version: 20190326211234) do
 
   create_table "players", force: :cascade do |t|
     t.string  "username"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20190325204459) do
     t.string "category"
     t.string "difficulty"
     t.string "correct_answer"
+    t.string "style"
+    t.string "incorrect_answers"
   end
 
 end

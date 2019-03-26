@@ -27,4 +27,8 @@ class Player < ActiveRecord::Base
   def reset_questions
     #  delete from db?
   end
+
+  def longest_streak
+    # track longest streak of correct answers
+  end
 end
