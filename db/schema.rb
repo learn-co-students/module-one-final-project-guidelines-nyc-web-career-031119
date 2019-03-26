@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190325204816) do
+ActiveRecord::Schema.define(version: 20190326192648) do
 
   create_table "shows", force: :cascade do |t|
     t.string   "title"
     t.string   "average_rating"
-    t.string   "status"
+    t.string   "synopsis"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
