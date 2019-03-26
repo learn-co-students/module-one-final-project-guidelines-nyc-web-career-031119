@@ -1,34 +1,14 @@
 class Job < ActiveRecord::Base
 	has_many :user_jobs
 	has_many :users, through: :user_jobs
-		
-		
-	def find_by_location
-
-	end
-
-	def find_by_title
-
-	end
-
-	def find_by_type
-
-	end
+end
 
 	
 end
 
-# #make the web request
-# 		response_string = RestClient.get('https://jobs.github.com/positions.json?page=2')
-# 		response_hash = JSON.parse(response_string)
-		
-
-
-
-def bulk_import(response_hash)
-				
-			
+def import_helper(response_hash)
 	response_hash.each do |job|
+		
 		position_type = job["type"]
 		description = job["description"]
 		job_uniq_id = job["id"]
@@ -44,21 +24,32 @@ def bulk_import(response_hash)
 			position_hours: "#{position_type}",company_url: "#{company_url}",how_to_apply:"#{how_to_apply}").save
 	end
 end
-		#bulk_import(response_hash)
+		
 
 def get_all_jobs
-	page_count = 1
-	r_string = RestClient.get('https://jobs.github.com/positions.json?page=1')
-	r_hash = JSON.parse(r_string)
-	bulk_import(r_hash)
 
-	until r_hash.length == 0
-		r_string = RestClient.get("https://jobs.github.com/positions.json?page='#{page_count}'")
+	page_count = 1
+
+	while page_count < 10
+		r_string = RestClient.get("https://jobs.github.com/positions.json?page=#{page_count}")
 		r_hash = JSON.parse(r_string)
-		bulk_import(r_hash)
-		page_count += 1
+		import_helper(r_hash)
+		page_count += 1	
 	end
 end
-binding.pry
+
+
+
+
 get_all_jobs
 			
+# r_hash.each do |job_hash|
+# 			if !Job.all_job_ids_in_db.include?(job_hash["id"])
+# 				r_hash.delete(job_hash)
+# 			end
+# end
+
+
+
+
+
