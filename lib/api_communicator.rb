@@ -16,7 +16,10 @@ end
 
 def print_average_rating(show_name)
    attributes_hash = get_show_from_api(show_name)
-   #  attributes_hash['averageRating']
-   binding.pry
+   puts attributes_hash['averageRating']
+end
 
+def pring_status(show_name)
+  attributes_hash = get_show_from_api(show_name)
+  puts attributes_hash['status']
 end
