@@ -1,5 +1,5 @@
 require_relative '../config/environment'
+require_relative "../lib/api_communicator.rb"
 
 
-
-puts "HELLO WORLD"
+get_show_from_api("fullmetal-alchemist-brotherhood")
