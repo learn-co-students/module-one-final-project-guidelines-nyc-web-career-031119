@@ -1,6 +1,79 @@
 require_relative '../config/environment'
 
-puts "HELLO WORLD"
+# puts "HELLO WORLD"
+
+
+def login(username)
+  player = Player.validate(username)
+  if player
+    puts "Welcome Back #{player.username}!"
+  else
+    player = Player.new_user(username)
+    puts "Welcome #{player.username}!"
+  end
+  @current_player = player
+end
+
+def main_menu
+  puts "What would you like to do?"
+  puts "1. Start Game"
+  puts "2. Stats"
+  puts "3. Reset Questions"
+  puts "4. Exit"
+  print "Please enter a number: "
+end
+
+def correct?(question, answer)
+  if question["correct_answer"].downcase == answer
+    puts "Correct!"
+    #increase score!!
+  else
+    puts "Wrong!" #play sound, minus life
+  end
+end
+
+def start_game
+  # puts "Choose a category"
+  question = get_random_question_from_api
+  # binding.pry
+  puts question["question"]
+  puts question["correct_answer"]
+  question["incorrect_answers"].each do |answer|
+    puts answer
+  end
+  answer = $stdin.gets.chomp.downcase
+  if answer == "exit"
+    exit
+  end
+  correct?(question, answer)
+
+end
+
+welcome
+# new_user?
+username = get_username
+login(username)
+playing = true
+while playing
+  main_menu
+  input = $stdin.gets.chomp.to_i
+
+  case input
+  when 1
+    start_game
+  when 2
+    @current_player.stats
+  when 3
+    @current_player.reset_questions
+    puts 'your questions have been reset'
+  when 4
+    puts "Bye!"
+    playing = false
+    # exit
+  end
+end
+
+
 
 # welcome, please enter your username
   # if exists

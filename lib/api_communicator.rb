@@ -30,13 +30,13 @@ require 'pry'
     "Entertainment: Cartoon & Animations"=>32
   }
 
-  def get_question(amount,category)
+  def get_question(category=nil, difficulty=nil)
     category_number = category_number(category_name)
-    JSON.parse(RestClient.get("https://opentdb.com/api.php?amount=#{amount}&category=#{category_number}"))['results']
+    JSON.parse(RestClient.get("https://opentdb.com/api.php?amount=1&category=#{category_number}&difficulty=#{difficulty}"))['results']
   end
 
   def get_random_question_from_api
-    JSON.parse(RestClient.get('https://opentdb.com/api.php?amount=1'))['results']
+    JSON.parse(RestClient.get('https://opentdb.com/api.php?amount=1'))['results'].first
   end
 
   def category_number(category_name)
