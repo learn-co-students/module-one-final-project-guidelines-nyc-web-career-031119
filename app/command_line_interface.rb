@@ -1,3 +1,12 @@
+class CLI
+  attr_reader :current_user, :current_show
+
+  def start
+    welcome
+    sign_in
+    user_options
+  end
+
 
   def welcome
     puts "Welcome!"
@@ -6,7 +15,28 @@
   def sign_in
     puts "Please type in a username."
     user_input = gets.chomp.downcase
-    User.find_or_create_by(user_name: user_input)
+    @current_user = User.find_or_create_by(user_name: user_input)
+  end
+
+  def user_options
+    user_input = ""
+    while user_input != 3
+    puts "What would you like to do?\n
+          1. search shows\n
+          2. see your shows\n
+          3.exit"
+    user_input = gets.chomp.to_i
+      if user_input == 1
+        show_name = get_show_from_user
+        get_show_from_api(show_name)
+        nice_print_format(show_name)
+        create_and_save_show(show_name)
+      elsif user_input == 2
+        self.current_user.shows.each { |show| puts "#{show.title} \n __________________"}
+      elsif user_input == 3
+        exit
+      end
+    end
   end
 
   def get_show_from_user
@@ -15,19 +45,24 @@
   end
 
   def new_show(show_name)
-    Show.find_or_create_by(title: show_name, average_rating: average_rating(show_name), synopsis: synopsis(show_name))
+    @current_show = Show.find_or_create_by(title: show_name, average_rating: average_rating(show_name), synopsis: synopsis(show_name))
   end
 
-  
-
-  def save_show(user_id, show_id)
-
+  def save_show
     puts "Would you like to save this show?(y/n)"
     user_input = gets.chomp.downcase
     if user_input == 'y'
-
-      UserShow.find_or_create_by(user_id: user_id, show_id: show_id)
+      UserShow.find_or_create_by(user_id: @current_user.id, show_id: @current_show.id)
     end
   end
 
-  # ns = new_show(show_name)
+  def create_and_save_show(show_name)
+    new_show(show_name)
+    save_show
+  end
+
+  def exit
+    puts "Thank You for using our app!"
+  end
+
+end

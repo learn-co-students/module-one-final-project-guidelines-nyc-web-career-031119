@@ -26,11 +26,6 @@ end
 
 def nice_print_format(show_name)
   puts "#{show_name}: Average Rating: #{average_rating(show_name)}"
-  puts "*" * 40
-  puts "Synopsis: #{synopsis(show_name)}"
+  puts "☻ ღ " * 20
+  puts "Synnopsis: #{synopsis(show_name)}"
 end
-
-# def synopsis(show_name)
-#   attributes_hash = get_show_from_api(show_name)
-#   attributes_hash['synopsis']
-# end
