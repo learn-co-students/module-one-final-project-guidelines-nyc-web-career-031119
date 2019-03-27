@@ -12,6 +12,9 @@
 
 def find_by_title(user_input)
 	result = Job.all.select{|job| job.title.include?("#{user_input}")}
+	puts "Total jobs including keyword: #{user_input.split.map(&:capitalize).join(' ')}: (#{result.length})"
+	job_counter = 0
+
 	result.map do|job| 
 		
 		puts "Title: #{job.title}"
@@ -22,6 +25,34 @@ def find_by_title(user_input)
 		puts "===" * 20
 		puts "===" * 20
 		puts "===" * 20
+
+		puts "please enter 'Y' to save Job, 'N' to skip to the next Job."
+			case user_input = gets.chomp.downcase
+			when "y"
+				# binding.pry
+				save_job(job)
+				puts "JOB SAVED!"
+			when "n"
+				puts "Next job incoming.."
+			when "exit"
+				user_dash
+				break
+			when
+			 	 until user_input == "y" || user_input == "n"
+					puts "Enter valid input."
+					user_input = gets.chomp.downcase
+					if user_input == "y"
+						save_job(job)
+					end
+			 	 end
+			end
+		
+		job_counter += 1
+
+		if job_counter == result.length
+			# binding.pry
+			user_dash
+		end
 	end
 end
 
