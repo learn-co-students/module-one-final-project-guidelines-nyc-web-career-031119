@@ -28,7 +28,7 @@ def find_by_location(user_input)
 		puts "===" * 20
 		puts "===" * 20
 		puts "===" * 20
-# binding.pry
+
 		puts "please enter 'Y' to save Job, 'N' to skip to the next Job."
 			case user_input = gets.chomp.downcase
 			when "y"
