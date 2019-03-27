@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190325211952) do
+ActiveRecord::Schema.define(version: 20190327131936) do
 
   create_table "jobs", force: :cascade do |t|
-    t.string   "type"
+    t.string   "position_hours"
     t.string   "url"
-    t.datetime "created_at",   null: false
+    t.datetime "created_at",     null: false
     t.string   "company"
     t.string   "company_url"
     t.string   "location"
     t.string   "title"
-    t.string   "description"
+    t.string   "job_info"
     t.string   "how_to_apply"
-    t.datetime "updated_at",   null: false
+    t.datetime "updated_at",     null: false
+    t.string   "job_uniq_id"
+    t.boolean  "job_saved"
   end
 
   create_table "user_jobs", force: :cascade do |t|

@@ -2,49 +2,42 @@ require 'rest-client'
 require 'json'
 require 'pry'
 
-def get_character_movies_from_api(character_name)
-  
-  #make the web request
-  response_string = RestClient.get('http://www.swapi.co/api/people/')
-  response_hash = JSON.parse(response_string)
-  character_array = response_hash["results"]
- 
+def import_helper(response_hash)
+	response_hash.each do |job|
+		
+		position_type = job["type"]
+		description = job["description"]
+		job_uniq_id = job["id"]
+		url = job["url"] 
+		company = job["company"] 
+		location = job["location"] 
+		title = job["title"]  
+		company_url = job["company_url"]
+		how_to_apply = job["how_to_apply"]
 
-match = character_array.find{|character| character["name"].downcase == character_name}
+	Job.find_or_create_by(job_uniq_id: "#{job_uniq_id}", url: "#{url}", company: "#{company}", 
+			location: "#{location}", title: "#{title.downcase}", job_info: "#{description.gsub(/<\/?[^>]*>/, "")}", 
+			position_hours: "#{position_type}",company_url: "#{company_url}",how_to_apply:"#{how_to_apply}").save
+	end
+end
+		
 
-films = match["films"]
+def get_all_jobs
 
-films.map do |film_url|
-movie_array = JSON.parse(RestClient.get(film_url))
-# movie_array["title"]
+	page_count = 1
+
+	while page_count < 10
+		r_string = RestClient.get("https://jobs.github.com/positions.json?page=#{page_count}")
+		r_hash = JSON.parse(r_string)
+		import_helper(r_hash)
+		page_count += 1	
+	end
 end
 
-  # collect those film API urls, make a web request to each URL to get the info
-  #  for that film
-  # return value of this method should be collection of info about each film.
-  #  i.e. an array of hashes in which each hash reps a given film
-  # this collection will be the argument given to `print_movies`
-  #  and that method will do some nice presentation stuff like puts out a list
-  #  of movies by title. Have a play around with the puts with other info about a given film.
-end
 
-def print_movies(films)
-   films.map do |film|
-      puts film["title"]
-      puts film["director"]
-      puts film["release_date"]   
-      puts "*" * 20
-   end
-end
-# binding.pry
 
-# end
 
-def show_character_movies(character)
-  films = get_character_movies_from_api(character)
-  print_movies(films)
-end
-## BONUS
+#get_all_jobs
 
-# that `get_character_movies_from_api` method is probably pretty long. Does it do more than one job?
-# can you split it up into helper methods?
+#jobs_array = response_hash["results"]
+
