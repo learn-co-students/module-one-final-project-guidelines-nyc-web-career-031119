@@ -14,5 +14,6 @@ end
 
 ## do you like any of those jobs? if yes, apply 
 	## save selected job postings to db
+	
 ## see_saved_jobs --> y/n
 ## y 
