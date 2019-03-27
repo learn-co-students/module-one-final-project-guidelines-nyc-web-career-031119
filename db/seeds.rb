@@ -1,0 +1,1 @@
+user_1 = User.new(username: "Tommy Hilfigure")
