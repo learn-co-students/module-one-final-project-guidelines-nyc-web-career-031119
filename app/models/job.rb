@@ -4,7 +4,7 @@ class Job < ActiveRecord::Base
 end
 
 	
-end
+
 
 def import_helper(response_hash)
 	response_hash.each do |job|
