@@ -16,7 +16,7 @@ def import_helper(response_hash)
 		how_to_apply = job["how_to_apply"]
 
 	Job.find_or_create_by(job_uniq_id: "#{job_uniq_id}", url: "#{url}", company: "#{company}", 
-			location: "#{location}", title: "#{title}", job_info: "#{description}", 
+			location: "#{location}", title: "#{title.downcase}", job_info: "#{description.gsub(/<\/?[^>]*>/, "")}", 
 			position_hours: "#{position_type}",company_url: "#{company_url}",how_to_apply:"#{how_to_apply}").save
 	end
 end

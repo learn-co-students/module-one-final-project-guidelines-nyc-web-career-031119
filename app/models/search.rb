@@ -2,29 +2,43 @@
 #string.gsub(/<\/?[^>]*>/, "")
 # def save?
 	
-	
+	# capitalize each word
+# .split.map(&:capitalize).join(' ')
 
 	
-# end
+
 
 
 
 def find_by_title(user_input)
-	Job.where(:title => "#{user_input}")
+	result = Job.all.select{|job| job.title.include?("#{user_input}")}
+	result.map do|job| 
+		
+		puts "Title: #{job.title}"
+		puts "Company: #{job.company} "
+		puts "Position: #{job.position_hours}"
+		puts "Listing posted on #{job.created_at}"
+		puts "Job description: #{job.job_info.truncate(500)}"
+		puts "===" * 20
+		puts "===" * 20
+		puts "===" * 20
+	end
 end
 
 def find_by_location(user_input)
+	# result = Job.where(:location => "#{user_input}")
+	result = Job.all.select{|job| job.location.include?("#{user_input}")}
+	puts "Total jobs located in #{user_input.split.map(&:capitalize).join(' ')}: (#{result.length})"
 	
-	result = Job.where(:location => "#{user_input}")
-	# binding.pry
 	job_counter = 0
+	# Job.all.select{|job| job.title.include?("senior")}
 	result.map do|job| 
 		
 		puts "Company: #{job.company} "
 		puts "Title: #{job.title}"
 		puts "Position: #{job.position_hours}"
 		puts "Listing posted on #{job.created_at}"
-		puts "Job description: #{job.job_info.truncate(500).gsub(/<\/?[^>]*>/, "")}"
+		puts "Job description: #{job.job_info.truncate(500)}"
 		puts "===" * 20
 		puts "===" * 20
 		puts "===" * 20
@@ -36,10 +50,17 @@ def find_by_location(user_input)
 				save_job(job)
 			when "n"
 				puts "Next job incoming.."
-			when user_input != "y" || "n"
-				"invalid input"
-			else
-				
+			when "exit"
+				user_dash
+				break
+			when
+			 	 until user_input == "y" || user_input == "n"
+					puts "Enter valid input."
+					user_input = gets.chomp.downcase
+					if user_input == "y"
+						save_job(job)
+					end
+			 	 end
 			end
 		
 		job_counter += 1

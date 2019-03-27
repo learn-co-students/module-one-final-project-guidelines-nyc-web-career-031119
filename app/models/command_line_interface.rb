@@ -34,8 +34,8 @@ def save_job(job)
 end
 
 
-def exit_cli
-	puts "will exit"
+def exit
+	exit
 end
 
 def user_dash
@@ -69,7 +69,7 @@ def search_jobs
 	      find_by_location(location_input)
 	    when "2"
 	    	puts "enter job title"
-	    	title_input = gets.chomp
+	    	title_input = gets.chomp.downcase
 	      find_by_title(title_input)
 	    when "exit"
 	      exit_cli
