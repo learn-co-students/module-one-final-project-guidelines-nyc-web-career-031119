@@ -3,7 +3,6 @@ require 'json'
 require 'pry'
 
 def get_show_from_api(show_name)
-
   response_string = RestClient.get('https://kitsu.io/api/edge/anime?page%5Blimit%5D=20&sort=-averageRating')
   response_hash = JSON.parse(response_string)
 
@@ -11,7 +10,9 @@ def get_show_from_api(show_name)
     list['attributes']['slug'].downcase == show_name
   # binding.pry
   end
- show_name_hash['attributes']
+  if show_name_hash
+      show_name_hash['attributes']
+    end
 end
 
 def average_rating(show_name)
@@ -29,3 +30,11 @@ def nice_print_format(show_name)
   puts "☻ ღ " * 20
   puts "Synnopsis: #{synopsis(show_name)}"
 end
+
+# def valid_entry(show_name)
+#   if get_show_from_api(show_name)
+#     nice_print_format(show_name)
+#   else
+#     puts "g"
+#   end
+# end

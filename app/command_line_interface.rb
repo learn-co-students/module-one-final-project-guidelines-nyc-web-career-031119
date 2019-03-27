@@ -29,12 +29,20 @@ class CLI
       if user_input == 1
         show_name = get_show_from_user
         get_show_from_api(show_name)
-        nice_print_format(show_name)
+        if !get_show_from_api(show_name)
+          puts "We couldn't find that show, please try again. (｡T ω T｡) \n "
+        else
+          nice_print_format(show_name)
+        # valid_entry(show_name)
         create_and_save_show(show_name)
+      end
       elsif user_input == 2
         self.current_user.shows.each { |show| puts "#{show.title} \n __________________"}
       elsif user_input == 3
         exit
+      else
+        puts "Please type a valid command (๑˃͈꒵˂͈๑) \n "
+
       end
     end
   end
