@@ -2,14 +2,35 @@ class CLI
   attr_reader :current_user, :current_show
 
   def start
+    clear_console
     welcome
     sign_in
+    clear_console
     user_options
   end
 
+  def clear_console
+    system('clear')
+  end
 
   def welcome
-    puts "Welcome!"
+puts "           |`-.._____..-'|
+           :  > .  ,  <  :
+           `./ __`' __ \,'
+            | (|_) (|_) |             Welcome!
+            ; _  .  __  :
+            `.,' - `-. ,'
+              `, `_  .'
+              /       \
+             /         :
+            :          |_
+           ,|  .    .  | \
+          : :   \   |  |  :
+          |  \   :`-;  ;  |
+          :   :  | /  /   ;
+           :-.'  ;'  / _,'`------.
+           `'`''-`'''-'-''--.---  )
+                        SSt `----'"
   end
 
   def sign_in
@@ -35,20 +56,24 @@ puts "=" * 30
       prompt
     user_input = gets.chomp.to_i
       if user_input == 1
+        clear_console
         show_name = get_show_from_user
         get_show_from_api(show_name)
         if !get_show_from_api(show_name)
           puts " We couldn't find that show, please try again. (｡T ω T｡) \n "
         else
+          clear_console
           nice_print_format(show_name)
         # valid_entry(show_name)
         create_and_save_show(show_name)
       end
       elsif user_input == 2
+        clear_console
         self.current_user.shows.each { |show| puts "#{show.title} \n -----------------------"}
       elsif user_input == 4
         exit
       elsif user_input == 3
+        clear_console
         sign_in
       else
         puts "Please type a valid command (๑˃͈꒵˂͈๑) \n "
@@ -71,6 +96,7 @@ puts "=" * 30
     if user_input == 'y'
       UserShow.find_or_create_by(user_id: @current_user.id, show_id: @current_show.id)
     end
+    clear_console
   end
 
   def create_and_save_show(show_name)
