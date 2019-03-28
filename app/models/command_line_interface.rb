@@ -3,8 +3,8 @@ def welcome
 
 	# binding.pry
 
-# 	puts  
-# 	      /\ \               /\ \         /\ \               / /\    / /\         /\ \           /\ \            /\ \          /\ \       
+# 	puts  "
+# 	    /\ \               /\ \         /\ \               / /\    / /\         /\ \           /\ \            /\ \          /\ \       
 #        /  \ \              \ \ \        \_\ \             / / /   / / /         \ \ \         /  \ \          /  \ \        /  \ \____  
 #       / /\ \_\             /\ \_\       /\__ \           / /_/   / / /          /\ \_\       / /\ \ \        / /\ \ \      / /\ \_____\ 
 #      / / /\/_/            / /\/_/      / /_ \ \         / /\ \__/ / /          / /\/_/      / / /\ \_\      / / /\ \_\    / / /\/___  / 
@@ -14,15 +14,15 @@ def welcome
 #  / / /_____/ / /   ___/ / /__      / / /            / / /   / / /       ___/ / /__      / / /\ \ \      / / /______    \ \ \__/ / /     
 # / / /______\/ /   /\__\/_/___\    /_/ /            / / /   / / /       /\__\/_/___\    / / /  \ \ \    / / /_______\    \ \___\/ /      
 # \/___________/    \/_________/    \_\/             \/_/    \/_/        \/_________/    \/_/    \_\/    \/__________/     \/_____/      
-# HEREDOC
+# "
                                                                                                                                     
 
-puts "Welcome to Git-Hired"
+puts ("Welcome to" + " Git-Hired".green)
 seperator
 end
 
 def set_username
-  	puts "Login or create username."
+  	puts ("Login".green + " or" + " create username.".yellow)
   	input = gets.chomp.downcase
 
   	case input 
@@ -85,7 +85,7 @@ def user_dash
 
 				if saved_job_counter == num_of_saved_jobs
 					seperator
-					puts "You went through all your saved jobs"
+					puts "You went through all your saved jobs!".red
 			  		seperator
 					user_dash
 				end

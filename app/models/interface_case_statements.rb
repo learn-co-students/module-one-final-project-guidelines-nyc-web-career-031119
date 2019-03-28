@@ -11,8 +11,8 @@ def saved_job_case(job)
 		input = gets.chomp.downcase
 
 		if input == "y"
-			# binding.pry
-			found_job = User_Job.all.find_by(job_id: job.id, user_id: $current_user.id)
+			binding.pry
+			found_job = User_Job.find_by(job_id: job.id, user_id: $current_user.id)
 			found_job.delete
 		end
 	when "4"
@@ -71,3 +71,4 @@ end
 
 			
 		
+			
