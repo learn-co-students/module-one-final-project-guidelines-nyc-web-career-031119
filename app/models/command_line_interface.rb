@@ -1,4 +1,6 @@
 def welcome
+	puts "===" * 20
+
 	# binding.pry
 
 # 	puts  
@@ -16,6 +18,7 @@ def welcome
                                                                                                                                     
 
 puts "Welcome to Git-Hired"
+puts "===" * 20
 end
 
 def set_username
@@ -46,7 +49,7 @@ end
 
 
 def save_job(job)
-	User_Jobs.find_or_create_by(user_id: $current_user.id, job_id: job.id)
+	User_Job.find_or_create_by(user_id: $current_user.id, job_id: job.id)
 end
 
 
@@ -54,14 +57,41 @@ def exit
 	exit
 end
 
-def user_dash
+def find_saved_jobs
+	#returns array of all saved job ids
+	User_Job.all.map do|job_inst|
+     job_inst.user_id == $current_user.id
+     job_inst.job_id
+    end
+	
+end
 
-	puts "1. View Saved Jobs (#{User_Jobs.where(user_id: $current_user.id).length})"
+
+def user_dash
+# binding.pry
+	puts "1. View Saved Jobs (#{User_Job.where(user_id: $current_user.id).length})"
 	puts "2. Search  New Jobs(#{Job.all.length})"
 	 user_input = gets.chomp
 	case user_input
+	
+
 	when "1"
-		puts "saved jobs"
+puts "Saved jobs"
+
+array_of_saved_jobs = Job.all.where(id: find_saved_jobs)
+array_of_saved_jobs.map do |job|
+
+	puts "===" * 20
+	short_job_info(job)
+	puts "===" * 20
+	saved_jobs_helper
+
+	saved_job_case(job)
+		
+
+		
+end
+
 	when "2"
 		search_jobs
 	else
@@ -98,6 +128,7 @@ end
 
 
 def start_time_run
+	#get_all_jobs
 	welcome
 	set_username
 	user_dash

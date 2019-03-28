@@ -16,12 +16,9 @@ def find_by_title(user_input)
 	job_counter = 0
 
 	result.map do|job| 
-		
-		puts "Title: #{job.title}"
-		puts "Company: #{job.company} "
-		puts "Position: #{job.position_hours}"
-		puts "Listing posted on #{job.created_at}"
-		puts "Job description: #{job.job_info.truncate(500)}"
+		puts "===" * 20
+		puts "===" * 20
+		short_job_info(job)
 		puts "===" * 20
 		puts "===" * 20
 		puts "===" * 20
@@ -64,12 +61,9 @@ def find_by_location(user_input)
 	job_counter = 0
 	# Job.all.select{|job| job.title.include?("senior")}
 	result.map do|job| 
-		
-		puts "Company: #{job.company} "
-		puts "Title: #{job.title}"
-		puts "Position: #{job.position_hours}"
-		puts "Listing posted on #{job.created_at}"
-		puts "Job description: #{job.job_info.truncate(500)}"
+		puts "===" * 20
+		puts "===" * 20
+		short_job_info(job)
 		puts "===" * 20
 		puts "===" * 20
 		puts "===" * 20
