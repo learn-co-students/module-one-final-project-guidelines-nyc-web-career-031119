@@ -8,7 +8,7 @@ def get_show_from_api(show_name)
 
  show_name_hash = response_hash['data'].find do|list|
     list['attributes']['slug'].downcase == show_name
-  # binding.pry
+  # binding.pry 'slug' goes after attributes
   end
   if show_name_hash
       show_name_hash['attributes']

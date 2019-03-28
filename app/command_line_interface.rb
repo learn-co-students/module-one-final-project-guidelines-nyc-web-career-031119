@@ -21,10 +21,12 @@ class CLI
   def user_options
     user_input = ""
     while user_input != 3
+    puts "=" * 30
     puts "What would you like to do?\n
           1. search shows\n
           2. see your shows\n
-          3.exit"
+          3.exit\n"
+puts "=" * 30
     user_input = gets.chomp.to_i
       if user_input == 1
         show_name = get_show_from_user
@@ -37,18 +39,17 @@ class CLI
         create_and_save_show(show_name)
       end
       elsif user_input == 2
-        self.current_user.shows.each { |show| puts "#{show.title} \n __________________"}
+        self.current_user.shows.each { |show| puts "#{show.title} \n -----------------------"}
       elsif user_input == 3
         exit
       else
         puts "Please type a valid command (๑˃͈꒵˂͈๑) \n "
-
       end
     end
   end
 
   def get_show_from_user
-    puts "please enter a show name"
+    puts "please enter a show name."
   gets.chomp.downcase
   end
 
