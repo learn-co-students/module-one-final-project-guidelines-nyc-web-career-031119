@@ -7,17 +7,35 @@ def get_show_from_api(show_name)
   response_hash = JSON.parse(response_string)
 
  show_name_hash = response_hash['data'].find do|list|
-    list['attributes']['slug'].downcase.include?(show_name)
-  # binding.pry 
-  end
+   list['attributes']['titles'].each do |lang, title|
+     title.downcase.include?(show_name)
+   # binding.pry
+ end
+end
+    # list['attributes']['titles']['en'].downcase.include?(show_name)
+
+  # binding.pry
+#  end
   if show_name_hash
       show_name_hash['attributes']
-    end
+  else
+    puts "Show does not exist"
+  end
+
 end
 
 def average_rating(show_name)
    attributes_hash = get_show_from_api(show_name)
     attributes_hash['averageRating']
+end
+
+def title(show_name)
+  attributes_hash = get_show_from_api(show_name)
+  if attributes_hash['titles']['en']
+      attributes_hash['titles']['en']
+    else
+      attributes_hash['titles']['en_jp']
+    end
 end
 
 def synopsis(show_name)
@@ -26,7 +44,7 @@ def synopsis(show_name)
 end
 
 def nice_print_format(show_name)
-  puts "#{show_name}: Average Rating: #{average_rating(show_name)}"
+  puts "Title: #{title(show_name)}: Average Rating: #{average_rating(show_name)}"
   puts "☻ ღ " * 20
   puts "Synnopsis: #{synopsis(show_name)}"
 end

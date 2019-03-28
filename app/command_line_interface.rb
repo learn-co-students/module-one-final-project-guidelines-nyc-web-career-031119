@@ -69,7 +69,7 @@ puts "=" * 30
       end
       elsif user_input == 2
         clear_console
-        self.current_user.shows.each { |show| puts "#{show.title} \n -----------------------"}
+        self.current_user.reload.shows.each { |show| puts "#{show.title} \n -----------------------"}
       elsif user_input == 4
         exit
       elsif user_input == 3
@@ -105,7 +105,15 @@ puts "=" * 30
   end
 
   def exit
-    puts "Thank You for using our app!"
+    clear_console
+    puts "
+    ═✿✿✿═════✿✿═════✿✿═════✿✿✿═
+════════════ ('\../') ═════════════
+ ════════════ (◕.◕) ═════════════
+════════════ (,,)(,,) ═════════════
+.▀█▀.█▄█.█▀█.█▄.█.█▄▀　█▄█.█▀█.█─█
+─.█.─█▀█.█▀█.█.▀█.█▀▄　─█.─█▄█.█▄█"
+    puts "\nHave a great day!"
   end
 
 end
