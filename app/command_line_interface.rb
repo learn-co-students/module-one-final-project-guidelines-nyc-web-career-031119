@@ -32,7 +32,7 @@ puts "=" * 30
         show_name = get_show_from_user
         get_show_from_api(show_name)
         if !get_show_from_api(show_name)
-          puts "We couldn't find that show, please try again. (｡T ω T｡) \n "
+          puts " We couldn't find that show, please try again. (｡T ω T｡) \n "
         else
           nice_print_format(show_name)
         # valid_entry(show_name)
