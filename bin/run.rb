@@ -1,12 +1,14 @@
 require_relative '../config/environment'
 require_relative "../lib/command_line_interface.rb"
 
+ActiveRecord::Base.logger = false
+
 
 cli = CLI.new
+
 cli.greet
 cli.get_user_name
-cli.select_species_menu
-cli.foster_option
+cli.main_menu
 
 
 # cli.foster_length

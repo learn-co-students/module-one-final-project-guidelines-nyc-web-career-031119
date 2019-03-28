@@ -37,11 +37,11 @@ a19 = Animal.create(species: "Parrot", name: "Jackie" , birth_year: 8, size: "Sm
 a20 = Animal.create(species: "Parrot", name: "Debbs", birth_year: 4, size: "Small", gender: "Female", spayed_neutered: true)
 
 #Guinea pig
-a21 = Animal.create(species: "Guinea pig", name: "zack", birth_year: 3, size: "Medium", gender: "Male", spayed_neutered: false)
-a22 = Animal.create(species: "Guinea pig", name: "kimberly", birth_year: 4, size: "Medium", gender: "Female", spayed_neutered: false)
-a23 = Animal.create(species: "Guinea pig", name: "billy", birth_year: 3, size: "Medium", gender: "Male", spayed_neutered: false)
-a24 = Animal.create(species: "Guinea pig", name: "trini", birth_year: 4, size: "Medium", gender: "Female", spayed_neutered: false)
-a25 = Animal.create(species: "Guinea pig", name: "jason", birth_year: 3, size: "Medium", gender: "Male", spayed_neutered: false)
+a21 = Animal.create(species: "Guinea pig", name: "Zack", birth_year: 3, size: "Medium", gender: "Male", spayed_neutered: false)
+a22 = Animal.create(species: "Guinea pig", name: "Kimberly", birth_year: 4, size: "Medium", gender: "Female", spayed_neutered: false)
+a23 = Animal.create(species: "Guinea pig", name: "Billy", birth_year: 3, size: "Medium", gender: "Male", spayed_neutered: false)
+a24 = Animal.create(species: "Guinea pig", name: "Trini", birth_year: 4, size: "Medium", gender: "Female", spayed_neutered: false)
+a25 = Animal.create(species: "Guinea pig", name: "Jason", birth_year: 3, size: "Medium", gender: "Male", spayed_neutered: false)
 
 
 #fosterings Instances
