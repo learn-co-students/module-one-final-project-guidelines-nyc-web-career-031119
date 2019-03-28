@@ -16,17 +16,16 @@ def find_by_title(user_input)
 	job_counter = 0
 
 	result.map do|job| 
-		puts "===" * 20
-		puts "===" * 20
+		seperator
+		seperator
 		short_job_info(job)
-		puts "===" * 20
-		puts "===" * 20
-		puts "===" * 20
+		seperator
+		seperator
+		seperator
 
 		puts "please enter 'Y' to save Job, 'N' to skip to the next Job."
 			case user_input = gets.chomp.downcase
 			when "y"
-				# binding.pry
 				save_job(job)
 				puts "JOB SAVED!"
 			when "n"
@@ -61,14 +60,12 @@ def find_by_location(user_input)
 	job_counter = 0
 	# Job.all.select{|job| job.title.include?("senior")}
 	result.map do|job| 
-		puts "===" * 20
-		puts "===" * 20
+		seperator
+		seperator
 		short_job_info(job)
-		puts "===" * 20
-		puts "===" * 20
-		puts "===" * 20
-
-		puts "please enter 'Y' to save Job, 'N' to skip to the next Job."
+		seperator
+		seperator
+		puts "Save job? [y/n]"
 			case user_input = gets.chomp.downcase
 			when "y"
 				# binding.pry
@@ -77,7 +74,6 @@ def find_by_location(user_input)
 				puts "Next job incoming.."
 			when "exit"
 				user_dash
-				break
 			when
 			 	 until user_input == "y" || user_input == "n"
 					puts "Enter valid input."
@@ -97,16 +93,40 @@ def find_by_location(user_input)
 
 	end
 end
+		
 
 
+def return_most_saved_job
+	seperator
+        most_saved_job_id = User_Job.all.max_by { |job| job }.job_id
+	 	most_saved_job_count = User_Job.where(job_id: most_saved_job_id).count
+	 	job = Job.find(most_saved_job_id)
+		puts most_saved_job_info(job)
+		seperator
 
-def method_name
+		puts "- 1. View more?"
+		puts "- 2. Save job?"
+		puts "- 3. Dashboard"
 
-	if title 
-		find_by_title
-	elsif location
-		find_by_location
-	else
-		"please select a sort method"
+		user_input = gets.chomp
+		case user_input
+		when "1"
+			all_job_info(job)
+			seperator
+		puts "Save job? [y/n]"
+			user_input = gets.chomp
+		when "y" || "yes"
+			save_job(job)
+			seperator
+			user_dash
+		when "2"
+			save_job(job)
+			seperator
+			user_dash
+		when "3" || "exit"
+		user_dash	
 	end
-end			
+end
+		
+
+		

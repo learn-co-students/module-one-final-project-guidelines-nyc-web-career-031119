@@ -1,10 +1,10 @@
 def welcome
-	puts "===" * 20
+	seperator
 
 	# binding.pry
 
 # 	puts  
-# 	    /\ \               /\ \         /\ \               / /\    / /\         /\ \           /\ \            /\ \          /\ \       
+# 	      /\ \               /\ \         /\ \               / /\    / /\         /\ \           /\ \            /\ \          /\ \       
 #        /  \ \              \ \ \        \_\ \             / / /   / / /         \ \ \         /  \ \          /  \ \        /  \ \____  
 #       / /\ \_\             /\ \_\       /\__ \           / /_/   / / /          /\ \_\       / /\ \ \        / /\ \ \      / /\ \_____\ 
 #      / / /\/_/            / /\/_/      / /_ \ \         / /\ \__/ / /          / /\/_/      / / /\ \_\      / / /\ \_\    / / /\/___  / 
@@ -18,119 +18,114 @@ def welcome
                                                                                                                                     
 
 puts "Welcome to Git-Hired"
-puts "===" * 20
+seperator
 end
 
 def set_username
-  	puts "please enter a username"
-  	input = gets.chomp.capitalize
-	
-	$current_user = User.find_or_initialize_by(username: "#{input}")
- 	$current_user.save
-  
-  puts "Welcome #{$current_user.username}"
-end
- 
-def help
-  puts "I accept the following commands:
-  - help : Displays this help message
-  - location : Sorts job listings by location
-  -	title : Sorts job listings by job title
-  -	exit : To exit
-  "
+  	puts "Login or create username."
+  	input = gets.chomp.downcase
+
+  	case input 
+  	
+  	when "exit"
+  		puts "Quit Git Hired? [y/n]"
+  		input = gets.chomp.downcase
+
+		if input == "y"
+			exit!
+		else
+  		set_username
+  		end
+
+  	else
+		$current_user = User.find_or_initialize_by(username: "#{input}")
+ 		$current_user.save
+	  puts "Welcome #{$current_user.username.capitalize}"
+
+	end
+
 end
 
-def search_helper
-	puts "please Select a filter option."
-	puts "1. location"
-	puts "2. title"
-	puts "exit: to exit"
-end
+
 
 
 def save_job(job)
 	User_Job.find_or_create_by(user_id: $current_user.id, job_id: job.id)
-end
-
-
-def exit
-	exit
+	puts "Job saved!"
 end
 
 def find_saved_jobs
 	#returns array of all saved job ids
-	User_Job.all.map do|job_inst|
+	User_Job.all.select do|job_inst|
      job_inst.user_id == $current_user.id
-     job_inst.job_id
     end
-	
 end
 
+def num_of_saved_jobs
+find_saved_jobs.length
+end
 
+	
 def user_dash
-# binding.pry
-	puts "1. View Saved Jobs (#{User_Job.where(user_id: $current_user.id).length})"
-	puts "2. Search  New Jobs(#{Job.all.length})"
-	 user_input = gets.chomp
+	dash_helper
+	user_input = gets.chomp
 	case user_input
-	
-
-	when "1"
-puts "Saved jobs"
-
-array_of_saved_jobs = Job.all.where(id: find_saved_jobs)
-array_of_saved_jobs.map do |job|
-
-	puts "===" * 20
-	short_job_info(job)
-	puts "===" * 20
-	saved_jobs_helper
-
-	saved_job_case(job)
+	when "1" #Go into "Saved Jobs"
+		array_of_saved_jobs = Job.all.where(id: find_saved_jobs)
 		
+		saved_job_counter =0
 
-		
-end
+			array_of_saved_jobs.map do |job|
+				saved_job_counter += 1
+				seperator
+				short_job_info(job)
+				seperator
+				saved_jobs_helper
+				saved_job_case(job)
 
+				if saved_job_counter == num_of_saved_jobs
+					seperator
+					puts "You went through all your saved jobs"
+			  		seperator
+					user_dash
+				end
+			end
 	when "2"
 		search_jobs
-	else
-		puts "please select option 1 or 2"
+	when "exit"
+		exit!
+	when "3"
+		exit!
 	end
 
 end
-
-
-
 
 def search_jobs
 	search_helper
-
-	while user_input = gets.chomp
-	   case user_input.downcase
-	    when "1"
-	    	puts "enter location"
-	    	location_input = gets.chomp.split.map(&:capitalize).join(' ')
-	    	#binding.pry
-	      find_by_location(location_input)
-	    when "2"
-	    	puts "enter job title"
-	    	title_input = gets.chomp.downcase
-	      find_by_title(title_input)
-	    when "exit"
-	      exit_cli
-	      break
-	    else
-	      puts "please Select a filter option."
-	  end
-	end
+	search_case
 end
 
 
 def start_time_run
-	#get_all_jobs
 	welcome
 	set_username
 	user_dash
 	
 end
+
+		
+	
+	
+	
+
+		
+
+
+
+
+						
+				
+				
+		
+		
+
