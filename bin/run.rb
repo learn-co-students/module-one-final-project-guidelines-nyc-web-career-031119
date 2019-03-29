@@ -5,7 +5,8 @@ ActiveRecord::Base.logger = false
 
 
 cli = CLI.new
-
+cli.art_
+cli.art_two
 cli.greet
 cli.get_user_name
 cli.main_menu
