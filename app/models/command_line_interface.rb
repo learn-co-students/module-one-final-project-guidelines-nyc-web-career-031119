@@ -51,7 +51,7 @@ end
 
 def save_job(job)
 	User_Job.find_or_create_by(user_id: $current_user.id, job_id: job.id)
-	puts "Job saved!"
+	puts "Job saved!".green
 end
 
 def find_saved_jobs
@@ -85,7 +85,7 @@ def user_dash
 
 				if saved_job_counter == num_of_saved_jobs
 					seperator
-					puts "You went through all your saved jobs!".red
+					puts "You went through all your saved jobs!".yellow
 			  		seperator
 					user_dash
 				end
