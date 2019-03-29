@@ -31,32 +31,85 @@ class CLI
 
   def main_menu
     puts "Please select one of the following options"
-      puts "1. See your Fosterings"
-      puts "2. Foster A New Animal"
-      puts "3. Exit"
+    puts "1. See your Fosterings"
+    puts "2. Foster A New Animal"
+    puts "3. Exit"
 
       u_input = gets.chomp
 
       if u_input == "1"
-        curr_user = User.find_by(name: @user.name)
-
-        curr_user.animals.each_with_index do |animal, index|
+        # curr_user = User.find_by(name: @user.name)
+        # curr_user.animals.each_with_index do |animal, index|
+        @user.animals.each_with_index do |animal, index|
           puts "#{index+1}. #{animal.name}"
         end
+        puts "Thank you for being an awesome Foster Parent!"
+        puts ""
+        puts "Pick from the following:"
+        puts "A. Edit A Fostering"
+        puts "B. Delete A Fostering"
+        puts "C. Return to Main Menu"
+
+        sec_input = gets.chomp.upcase
+
+        if sec_input == "A"
+          if @user.animals.empty?
+            puts "You currently do not have fosterings. Please go back to the Main Menu!"
+          else
+            puts "Please enter the NAME you will like to change length of time"
+            @user.animals.each_with_index do |animal, index|
+              puts "#{index+1}. #{animal.name}"
+            end
+
+            four_input= gets.chomp.capitalize
 
 
 
-        # puts "Thank you for being an awesome Foster Parent"
-        # puts "1. Edit A Fostering"
-        # puts "2. Delete A Fostering"
-        # puts "3. Return to Main Menu"
+            puts "Please type in the length of time you want to foster"
+            puts "1. One week"
+            puts "2. Two weeks"
+            puts "3. Three weeks"
+            puts "4. Four weeks"
+            puts "5. Five weeks"
+            fost_input = gets.chomp
+
+            ani= Animal.find_by(name: four_input)
+            fos2 = Fostering.find_by(animal_id: ani.id, user_id: @user.id)
+              fos2.update(length_of_time: fost_input)
+              puts "Thank you changing your length of time to #{fos2.length_of_time}!"
+              main_menu
+          end
+        end
+        # un_input = gets.chomp
+        # if @user.fosterings.empty?
+        #   binding.pry
+        # end
+# Fostering.where("user_id = '#{user.id}' and animal_id = '#{animal.id}'")
+
+        if sec_input == "B"
+          if @user.animals.empty?
+            puts "You currently do not have fosters. Please go back to the Main Menu!"
+            main_menu
+          else
+            puts "Type the name of the animal you will like to remove"
+            @user.animals.each_with_index do |animal, index|
+            puts "#{index+1}. #{animal.name}"
+
+            third_input = gets.chomp.capitalize
+            an_remove = Animal.find_by(name: third_input)
+            an_remove.delete
+          end
+        end
+      end
+
+        main_menu
       elsif u_input == "2"
         select_species_menu
       elsif u_input == "3"
+        puts "Not today, but maybe tomorrow!"
         exit
       end
   end
-
 
   def select_species_menu
     #user selects animal species to foster
@@ -65,10 +118,10 @@ class CLI
       puts "2. Cat"
       puts "3. Rabbit"
       puts "4. Parrot"
-      puts "5. Guinea Pig"
+      puts "5. Guinea pig"
 
     #picks number that associates with species user will like to foster
-    species_input = gets.chomp
+    species_input = gets.chomp.capitalize
 
     #displays list of animals available to foster for each specie
     if species_input == "1"
@@ -90,8 +143,8 @@ class CLI
       picks_list("Parrot")
       @last_selected_species = "Parrot"
     elsif species_input == "5"
-      picks_list("Guinea Pig")
-      @last_selected_species = "Guinea Pig"
+      picks_list("Guinea pig")
+      @last_selected_species = "Guinea pig"
     end
       #user picks animal name
       puts "Please TYPE name of animal you will like to foster!"
@@ -101,7 +154,6 @@ class CLI
       #method_to_put_selection_attributes(animal_selection_name)
   end
 
-
      #refactored if loop ieration
      def picks_list(name)
        array_of_animals = Animal.where(species: name)
@@ -110,10 +162,6 @@ class CLI
             puts "#{index+1}. #{animal.name}"
       end
     end
-
-    def find_fosterings(id)
-      a
-
 
     def method_to_put_selection_attributes(name)
       #need iterator to print out each attribute from array
@@ -153,11 +201,9 @@ class CLI
       end
         sec_input = gets.chomp.downcase
       if sec_input == "y"
-        puts "Please TYPE name of animal you will like to foster!"
-          # method_to_put_selection_attributes_two(animal_selection_name_two)
-          # animal_selection_name_two = gets.chomp.capitalize
+        select_species_menu
       else sec_input == "n"
-        puts "Please, come back as we're always getting new animals to Foster."
+        puts "Please, come back as we're always getting new animals to foster."
       end
 
     end
@@ -181,24 +227,29 @@ class CLI
 
     if foster_length_input == "1"
       puts "You're amazing human. Thank you for sharing your home for 1 week!"
+      puts "Come back soon!"
       return "1 week"
       exit
     elsif foster_length_input == "2"
       puts "You're amazing human. Thank you for sharing your home for 2 weeks!"
+      puts "Come back soon!"
       return "2 weeks"
+      exit
     elsif foster_length_input =="3"
       puts "You're amazing human. Thank you for sharing your home for 3 weeks!"
+      puts "Come back soon!"
       return "3 weeks"
+      exit
     elsif foster_length_input == "4"
       puts "You're amazing human. Thank you for sharing your home for 4 weeks!"
+      puts "Come back soon!"
       return "4 weeks"
+      exit
     elsif foster_length_input == "5"
       puts "You're amazing human. Thank you for sharing your home for 5 weeks!"
+      puts "Come back soon!"
       return "5 weeks"
+      exit
     end
-
   end
-
-
-end
 end
