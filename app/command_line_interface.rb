@@ -87,7 +87,7 @@ puts "=" * 30
   end
 
   def new_show(show_name)
-    @current_show = Show.find_or_create_by(title: show_name, average_rating: average_rating(show_name), synopsis: synopsis(show_name))
+    @current_show = Show.find_or_create_by(title: title(show_name), average_rating: average_rating(show_name), synopsis: synopsis(show_name))
   end
 
   def save_show

@@ -6,12 +6,17 @@ def get_show_from_api(show_name)
   response_string = RestClient.get('https://kitsu.io/api/edge/anime?page%5Blimit%5D=20&sort=-averageRating')
   response_hash = JSON.parse(response_string)
 
- show_name_hash = response_hash['data'].find do|list|
-   list['attributes']['titles'].each do |lang, title|
-     title.downcase.include?(show_name)
-   # binding.pry
+  show_name_hash = nil
+  response_hash['data'].each do |list|
+    break if show_name_hash != nil
+    list['attributes']['titles'].each do |lang, title|
+     if title.downcase.include?(show_name)
+       show_name_hash = list
+       # binding.pry
+     end
+   end
+
  end
-end
     # list['attributes']['titles']['en'].downcase.include?(show_name)
 
   # binding.pry
