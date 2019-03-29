@@ -49,7 +49,7 @@ def all_job_info(job)
 end
 
 def dash_helper
-	seperator
+	# seperator
 	puts "- 1. View Saved Jobs (#{User_Job.where(user_id: $current_user.id).length})"
 	puts "- 2. Search  New Jobs(#{Job.all.length})"
 	puts "- 3. Quit Git Hired"

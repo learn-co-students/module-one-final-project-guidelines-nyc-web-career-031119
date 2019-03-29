@@ -12,18 +12,20 @@
 
 def find_by_title(user_input)
 	result = Job.all.select{|job| job.title.include?("#{user_input}")}
-	puts "Total jobs including keyword: #{user_input.split.map(&:capitalize).join(' ')}: (#{result.length})"
+	puts "Total jobs including keyword: #{user_input.split.map(&:capitalize).join(' ')}: (#{result.length})".yellow
 	job_counter = 0
 
 	result.map do|job| 
 		seperator
 		seperator
 		short_job_info(job)
+		puts "Next job incoming..".yellow
 		seperator
 		seperator
-		seperator
+		
 
-		puts "please enter 'Y' to save Job, 'N' to skip to the next Job."
+		puts "please enter 'Y' to save Job, 'N' to skip to the next Job. \nOr 'exit' to go back to dashboard".yellow
+
 			case user_input = gets.chomp.downcase
 			when "y"
 				save_job(job)
@@ -63,9 +65,10 @@ def find_by_location(user_input)
 		seperator
 		seperator
 		short_job_info(job)
+		puts "Next job incoming..".yellow
 		seperator
 		seperator
-		puts "Save job? [y/n]"
+		puts "Save job? [y/n] or 'exit' to return to dashboard".yellow
 			case user_input = gets.chomp.downcase
 			when "y"
 				# binding.pry

@@ -17,7 +17,7 @@ def import_helper(response_hash)
 
 	Job.find_or_create_by(job_uniq_id: "#{job_uniq_id}", url: "#{url}", company: "#{company}", 
 			location: "#{location}", title: "#{title.downcase}", job_info: "#{description.gsub(/<\/?[^>]*>/, "")}", 
-			position_hours: "#{position_type}",company_url: "#{company_url}",how_to_apply:"#{how_to_apply}").save
+			position_hours: "#{position_type}",company_url: "#{company_url}",how_to_apply:"#{how_to_apply.gsub(/<\/?[^>]*>/, "")}").save
 	end
 end
 		
